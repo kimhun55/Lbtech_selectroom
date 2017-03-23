@@ -362,7 +362,7 @@ class Group extends CI_Controller {
 			'branchId'  => $branchId,
 			);
 
-			$check = $this->branch_model->delete_std_group($data_detele);
+			$check = $this->branch_model->delete_std_group($data_detele,$this->menu->get_id());
 			if($check){
 			
 					redirect($this->input->post('form_callback')."/selecttrue",'refresh');
@@ -639,7 +639,7 @@ class Group extends CI_Controller {
 			'branchId'  => $branchId,
 			);
 
-			$check = $this->branch_model->delete_std_group($data_detele);
+			$check = $this->branch_model->delete_std_group($data_detele,$this->menu->get_id());
 			if(!$check){
 				exit('error 99 connect admin');
 			}

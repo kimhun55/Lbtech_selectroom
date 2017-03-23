@@ -291,6 +291,7 @@ class Branch_model extends CI_Model {
 	public function replace_std_group($data){
 		$replace = $this->db->replace('std_group',$data);
 		if($replace){
+			$this->log_change_std_group($data);
 			return true;
 		}else{
 			return false;
@@ -298,9 +299,21 @@ class Branch_model extends CI_Model {
 
 	}
 
-	public function	delete_std_group($data){
+	//log change group 
+	public function log_change_std_group($data){
+
+		@$this->db->insert('std_group_log', $data);
+
+	}
+
+	public function	delete_std_group($data,$user_id = 1){
 		$delete = $this->db->delete('std_group', $data);
 		if($delete){
+			$data['std_group'] = 99;
+			$data['std_datetime'] = date("Y-m-d H:i:s");
+			$data['u_id'] = $user_id;
+
+			$this->log_change_std_group($data);
 			return true;
 		}else{
 			return false;
