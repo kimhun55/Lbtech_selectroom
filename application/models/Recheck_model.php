@@ -7,6 +7,7 @@ class Recheck_model extends CI_Model {
 		parent::__construct();
 		//Do your magic here
 		$this->set_db_admission();
+		$this->load->model('Money_quaota_model','money_quaota');
 	}
 
 	public $admission;
@@ -54,7 +55,7 @@ class Recheck_model extends CI_Model {
 		if($branchId != NULL){
 			$this->admission->where('stdAdmisResult',$branchId);
 		}
-		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,stdAdmisResult")
+		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,stdAdmisResult,stat_into")
 						->from('tblcandidate')
 						//->where('stat_into','0')
 						->where('round>','0')
@@ -124,7 +125,7 @@ class Recheck_model extends CI_Model {
 		if($branchId != NULL){
 			$this->admission->where('std_admis_result',$branchId);
 		}
-		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,std_admis_result AS stdAdmisResult")
+		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,std_admis_result,stat_into AS stdAdmisResult")
 						->from('tblcandidate_q')
 						->where('stat_into','0')
 						//**add new 2/17/2017
@@ -158,9 +159,24 @@ class Recheck_model extends CI_Model {
 			return $data;
 		}
 
-							
+		
+		//check money 
+		$money_check = $this->money_quaota->check_money_quaota();
+
+
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $row){
+				//start check money
+				if($money_check !== false){
+					if(isset($money_check[$row['stdApplyNo']])){
+						$row['money'] = 1;
+					}else{
+						$row['money'] = 0;
+					}
+				}
+				//end check money 
+
+
 				$row = array_merge($row,$this->get_department_by_id($row['stdAdmisResult']));
 				$row['in'] = 'quaota';
 				$data['data'][] = $row;
@@ -173,6 +189,8 @@ class Recheck_model extends CI_Model {
 		}
 
 	}
+
+
 	//get by branchID => branch
 	public	function get_department_by_id($id_department){
 		$this->admission->select("branch,major,level")

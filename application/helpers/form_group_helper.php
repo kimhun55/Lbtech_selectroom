@@ -108,4 +108,23 @@
 			echo ' selected="selected" ';
 		}
 	}
+
+	function show_stat_into($data=NUll){
+		if($data == 0){
+			echo '<span class="label label-success">มอบตัว</span>';
+		}else{
+			echo '<span class="label label-danger">ไม่มอบตัว</span>';
+		}
+		return NULL;
+	}
+
+	function show_check_money($data=NUll){
+		if($data == 1){
+			echo '<span class="label label-success">ลงทะเบียน</span>';
+		}else{
+			echo '<span class="label label-danger">ยังไม่ลงทะเบียน</span>';
+		}
+		return NULL;
+	}
+	
 ?>
