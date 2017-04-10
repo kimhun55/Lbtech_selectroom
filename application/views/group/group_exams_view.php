@@ -3,7 +3,14 @@
     
     text-align: center;
 }
+.btn span.glyphicon {    			
+	opacity: 0;				
+}
+.btn.active span.glyphicon {				
+	opacity: 1;				
+}
 </style>
+
 <div class="container">
 	<div class="row" >
 		<center><h3>
@@ -22,19 +29,35 @@
  		<div class="col-md-9 col-md-push-3">
  			<div class="panel panel-success"> 
  			<div class="panel-heading"> 
- 			<div style="float: left;">
- 			test
+ 			<div style="float: right;">
+ 			
  			</div>
  			<h3 class="panel-title">รายชื่อนักศึกษา สอบตรง ทั้งหมด [<?php echo $data_table['count']; ?>]</h3>
  			</div> 
  				<div class="panel-body">
+
 	<form class="form-inline" style="text-align: center;" method="post" action="<?php echo $search_form_action;?>">
 	  <div class="form-group">
 	    <label for="">Searching</label>
 	    <input type="text" class="form-control" name="search" placeholder="ค้นหา">
 	  </div>
 	  <button type="submit" class="btn btn-default">OK</button>
+	  <a href="<?php echo site_url('group/exams/'.$branch.'/k/total');?>"><button type="button" class="btn btn-info ">By Total</button></a>
 	</form>
+	<br>
+	<div class="jumbotron">
+  	<h3>หมายเหตุ สถานะ ครู รับมอบตัว</h3>
+  	<p>	<label class="btn btn-success active">
+				
+				<span class="glyphicon glyphicon-ok"></span>
+			</label> นักเรียนมามอบตัวแล้ว </p>
+	<p>	<label class="btn btn-danger active">
+				
+				<span class="glyphicon glyphicon-ok"></span>
+			</label> นักเรียนไม่มามอบตัวแล้ว </p>
+ 
+  
+	</div>
 		<br>
 		<div class="table-responsive">
 	<?php if($status == 2) { ?>
@@ -43,16 +66,18 @@
  	 	 <button type="submit" class="btn btn-primary" style="float: right; margin-bottom: 5px;">Send</button>
  	 	
  	 <?php } ?>
- 	 <div style="width:100%;overflow:auto; max-height:500px; margin-bottom: 5px;">
+ 	 <!-- <div style="width:100%;overflow:auto; max-height:500px; margin-bottom: 5px;"> -->
  				<table class="table table-bordered table-hover">
  					<thead>
  						<tr>
  								<th>#</th>
+ 								<?php if($orderby != NULL) echo "<th>".$orderby."</th>";?>
  								<th>id</th>
  								<th>คำนำหน้า</th>
  								<th>ชื่อ</th>
  								<th>นามสกุล</th>
  								<th style="text-align: center;">กลุ่ม</th>
+ 								<th>ครู รับมอบตัว</th>
  						</tr>
  					</thead>
 
@@ -65,7 +90,11 @@
  						<tr<?php if($value['std_group_room'] == 99 || $value['std_group_room'] == '') echo ' class="danger" ';?>
  						>
  								<td><?php echo $i++;?></td>
- 								<td><?php echo $value['stdApplyNo'];?></td>
+ 								<?php if($orderby != NULL) echo "<td>".$value['total']."</td>";?>
+ 								<td><?php echo $value['stdApplyNo'];?>
+ 									<br>
+ 									<?php echo show_stat_surrender_exams_teacher($value['surrender']); ?>
+ 								</td>
  								<td><?php echo $value['prefix_id_th'];?></td>
  								<td><?php echo $value['stu_fname_th'];?></td>
  								<td><?php echo $value['stu_lname_th'];?></td>
@@ -85,14 +114,14 @@
 	   </div>
 	  </div>
 	   <?php } ?>
-	
- 									
- 								</td>
+		</td>
+ 						
+ 						<td align="center"><?php btn_surrender_exams_teacher($value);?></td>
  						</tr>
  					<?php } }?>
  					</tbody>
  				</table>
- 		</div><!--off div scrollbar-->
+ 		<!-- </div> --><!--off div scrollbar-->
  		<?php if($status == 2) { ?>
  			 <button type="submit" class="btn btn-primary" style="float: right;">Send</button>
  			<input type="hidden" name="form_callback" value="<?php echo $form_callback; ?>"/>

@@ -98,6 +98,55 @@ class Recheck extends CI_Controller {
 
 	}
 
+	public function data_std_group_error(){
+		$data = $this->recheck->data_std_group_error();
+
+		$data['content_data']['data'] = $data;
+		//set titile
+	 	$this->header->get_title("system check group std");
+	 	$this->menu->get_menu_navbar("recheck");
+
+
+	 	//set data to theme
+	 	$data['header_data'] = $this->header->output();
+	 	$data['menu_data'] = $this->menu->output();
+	 	//$data['content_data'] = $content_data;
+	 	$data['content_view'] = "recheck/check_group_std_view";
+	 	$data['footer_data'] = NULL;
+	 	//var_dump($data);
+	 		
+	 	//load view
+	 	$this->load->view('theme/index', $data, FALSE);
+
+		// foreach ($data as $key =>$value) {
+		// 	echo $value['stdCardID']." : ".$value['stdApplyNo']." => ";
+		// 	$this->db->where('stdCardID',$value['stdCardID']);
+		// 	$this->db->where('stdApplyNo',$value['stdApplyNo']);
+		// 	$delete = $this->db->delete('std_group');
+		// 	if($delete){
+		// 		echo "OK delete";
+		// 	}else{
+		// 		echo "NO delete";
+		// 	}
+		// 	echo "<br>";
+		// }
+
+
+
+	}
+	public function delete_std_group($stdCardID,$stdApplyNo){
+			$this->db->where('stdCardID',$stdCardID);
+			$this->db->where('stdApplyNo',$stdApplyNo);
+			$delete = $this->db->delete('std_group');
+			if($delete){
+				redirect('recheck/data_std_group_error','refresh');
+			}else{
+				exit('error connect admin ');
+			}
+
+	}
+
+
 	
 
 }

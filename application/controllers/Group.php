@@ -473,7 +473,7 @@ class Group extends CI_Controller {
 	}
 
 
-	public function quaota($branch=NULL,$result=NULL)
+	public function quaota($branch=NULL,$result=NULL,$orderby=NULL)
 	{
 		if($branch == NULL){
 			redirect('home', 'refresh');
@@ -503,12 +503,13 @@ class Group extends CI_Controller {
 		}else{
 			$search = NULL;
 		}
-
+		$data['content_data']['orderby'] = $orderby;
+		$data['content_data']['branch'] = $branch;
 		$data['content_data']['search_form_action'] = site_url('group/quaota/'.$branch);
 
 		$data['content_data']['menu']['room'] = 'quaota';
 		//$data['content_data']['data_table'] = $this->branch_model->get_std_full($branch,$search);
-		$data['content_data']['data_table'] = $this->branch_model->get_std_quaota($branch,$search);
+		$data['content_data']['data_table'] = $this->branch_model->get_std_quaota($branch,$search,$orderby);
 		
 		
 		$data['content_data']['data_group_count_array'] =$this->branch_model->get_group_count($branch);
@@ -545,8 +546,9 @@ class Group extends CI_Controller {
 		
 	}
 
-	public function exams($branch=NULL,$result=NULL)
+	public function exams($branch=NULL,$result=NULL,$orderby=NULL)
 	{
+
 		if($branch == NULL){
 			redirect('home', 'refresh');
 			exit();	
@@ -575,12 +577,13 @@ class Group extends CI_Controller {
 		}else{
 			$search = NULL;
 		}
-
+		$data['content_data']['orderby'] = $orderby;
+		$data['content_data']['branch'] = $branch;
 		$data['content_data']['search_form_action'] = site_url('group/exams/'.$branch);
 
 		$data['content_data']['menu']['room'] = 'exams';
 		//$data['content_data']['data_table'] = $this->branch_model->get_std_full($branch,$search);
-		$data['content_data']['data_table'] = $this->branch_model->get_std_exams($branch,$search);
+		$data['content_data']['data_table'] = $this->branch_model->get_std_exams($branch,$search,$orderby);
 		
 		
 		$data['content_data']['data_group_count_array'] =$this->branch_model->get_group_count($branch);
@@ -620,6 +623,18 @@ class Group extends CI_Controller {
 
 
 	public function selectgroup($branchId){
+	
+	if($this->input->post('std') !=NULL){
+		foreach ($this->input->post('std') as $stdCardID => $v1) {
+			echo $stdCardID.":";
+			foreach ($v1 as $stdApplyNo => $value) {
+				//echo $stdApplyNo.":".$value."<br>";
+				$this->exams_surrender_teacher($stdCardID,$stdApplyNo,$value);
+			}
+		}
+		
+	}
+	unset($stdCardID);unset($stdApplyNo);unset($value);
 
 	if( $this->input->post('std_group') == NULL){
 			redirect($this->input->post('form_callback')."/selectfalse",'refresh');
@@ -643,7 +658,9 @@ class Group extends CI_Controller {
 			if(!$check){
 				exit('error 99 connect admin');
 			}
-		}
+
+
+		}else{
 
 
 		$data = array(
@@ -659,6 +676,7 @@ class Group extends CI_Controller {
 		if(!$check){
 				exit('error chege group connect admin');
 			}
+		}
 
 		}//main for 2
 	}//main for 1
@@ -669,6 +687,27 @@ class Group extends CI_Controller {
 
 
 
+
+
+	public function exams_surrender_teacher($stdCardID,$stdApplyNo,$status){
+		if(is_null($stdCardID) || is_null($stdApplyNo) || is_null($status)){
+			redirect('home','refresh');
+		}
+
+		$data_insert = array(
+				"stdCardID" => $stdCardID,
+				"stdApplyNo" => $stdApplyNo,
+				"surrender_status" => $status,
+				"u_id" => $this->menu->get_id(),
+				"surrender_datetime"=> date("Y-m-d H:i:s")
+			);
+
+		$insert = $this->recheck->change_surrender_exams_teacher($data_insert);
+		if(!$insert){
+			exit("error chenge surrender exams connect admin kimhun55");
+		}
+		return true;
+	}
 }
 
 /* End of file Group */

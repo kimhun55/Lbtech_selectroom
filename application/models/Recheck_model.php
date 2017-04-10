@@ -37,10 +37,9 @@ class Recheck_model extends CI_Model {
 	/* -------------------------- std check q+m */
 
 	/*ข้อมูลเด็กสอบ*/
-	public function query_std_exams($branchId=NULL,$stdCardID=NULL,$where_stdCardID=NULL,$search=NULL,$where_array=NULL){
+	public function query_std_exams($branchId=NULL,$stdCardID=NULL,$where_stdCardID=NULL,$search=NULL,$where_array=NULL,$orderby=NULL){
 
 		
-
 		if(is_array($stdCardID) && $stdCardID != false){
 			if($where_stdCardID == NULL){
 				$this->admission->where_not_in('stdCardID', $stdCardID);
@@ -55,11 +54,15 @@ class Recheck_model extends CI_Model {
 		if($branchId != NULL){
 			$this->admission->where('stdAdmisResult',$branchId);
 		}
-		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,stdAdmisResult,stat_into")
+		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,stdAdmisResult,stat_into,stdAdmisResult,total")
 						->from('tblcandidate')
 						//->where('stat_into','0')
-						->where('round>','0')
-						->order_by('stdApplyNo','ASC');
+						->where('round>','0');
+		if($orderby == NULL){
+			$this->admission->order_by('stdApplyNo','ASC');
+		}else{
+			$this->admission->order_by($orderby,'DESC');
+		}
 
 		//echo $search."||";
 		if($search != NULL){
@@ -90,24 +93,39 @@ class Recheck_model extends CI_Model {
 			return $data;
 		}
 
-		
+		$surrender = $this->get_surrender_exams_teacher();
+
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $row){
 
 				$row = array_merge($row,$this->get_department_by_id($row['stdAdmisResult']));
 				$row['in'] = 'exams';
+				//check surrender
+					
+					if($surrender !== false){
+						if(@isset($surrender[$row['stdApplyNo']])){
+							$row['surrender'] = $surrender[$row['stdApplyNo']];
+						}else{
+							$row['surrender'] = 0;
+						}
+					}else{
+						$row['surrender'] = 0;
+					}
+				//end check surrender
+
+
 				$data['data'][] = $row;
 				$data['key'][] =$row['stdCardID'];
 			}
 				$data['count'] = $query->num_rows();
-			//return $data;
-				return false;
+			return $data;
+				//return false;
 		}else{
 			 return false;
 		}
 
 	}
-	public function query_std_quaota($branchId=NULL,$stdCardID=NULL,$where_stdCardID=NULL,$search=NULL,$where_array=NULL){
+	public function query_std_quaota($branchId=NULL,$stdCardID=NULL,$where_stdCardID=NULL,$search=NULL,$where_array=NULL,$orderby=NULL){
 
 		
 
@@ -125,13 +143,18 @@ class Recheck_model extends CI_Model {
 		if($branchId != NULL){
 			$this->admission->where('std_admis_result',$branchId);
 		}
-		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,std_admis_result,stat_into AS stdAdmisResult")
+		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,std_admis_result,stat_into,stdAdmisResult,stdGPA")
 						->from('tblcandidate_q')
 						->where('stat_into','0')
 						//**add new 2/17/2017
 						->where('stdAdmisResult !=','')
-						->where('comment','')
-						->order_by('stdApplyNo','ASC');
+						->where('comment','');
+					//	->order_by('stdApplyNo','ASC');
+		if($orderby == NULL){
+			$this->admission->order_by('stdApplyNo','ASC');
+		}else{
+			$this->admission->order_by($orderby,'DESC');
+		}
 
 		if($search != null){
 			//echo "MMMMMMM";
@@ -271,7 +294,105 @@ class Recheck_model extends CI_Model {
 		
 		return $data;
 	}
+
+	public function get_surrender_exams_teacher(){
+		$query = $this->db->get('surrender_exams_teacher');
+		if($query->num_rows() == 0)
+			return false;
+
+		foreach ($query->result_array() as  $row) {
+			$data[$row['stdApplyNo']] = $row['surrender_status'];
+		}
+		//var_dump($data);
+		return $data;
+	}
+
+	public function change_surrender_exams_teacher($data){
+		$insert = $this->db->replace('surrender_exams_teacher', $data);
+		if($insert){
+			return true;
+		}else{
+			return false;
+		}
+	}
+//check std ===============================================================>
+	public function data_std_group_error(){
+	
+		 $data  = array('exams' =>array(),
+							'quaota' =>array(),
+							'no' =>array() );
+	
+
+		$std_group = $this->get_std_group_all();
+
+		if($std_group === false) return false;
+
+			foreach ($std_group as $key => $group) {
+			$where = array('stdCardID' =>$group['stdCardID'],
+							'stdApplyNo' =>$group['stdApplyNo']
+							);
+			//exams
+			$exams = $this->check_std_exams($where);
+			if($exams !== false){
+					if($exams['stdAdmisResult'] != $group['branchId'] || $exams['round'] == 0){
+						$group['data'] = $exams;
+						$data['exams'][] = $group; 
+					}
+					continue;
+			}
+			//quaota
+			$quaota = $this->check_std_quaota($where);
+			if($quaota !== false){
+					if($quaota['stdAdmisResult'] != $group['branchId'] || $quaota['stat_into'] == 1 || $quaota['stat_into'] ==2){
+						$group['data'] = $quaota;
+						$data['quaota'][] = $group; 
+					}
+					continue;
+			}
+
+
+			//no std
+			$data['no'][] = $group;
+					
+		}//endforeach
+		
+		return $data;
+
+	}
+
+	public function check_std_exams($where_array){
+		$this->admission->where($where_array);
+		$query = $this->admission->get('tblcandidate');
+		if($query->num_rows() == 0) return false;
+		foreach ($query->result_array() as  $row) {
+			$data = $row;
+
+		}
+		return $data;
+	}
+	public function check_std_quaota($where_array){
+		$this->admission->where($where_array);
+		$query = $this->admission->get('tblcandidate_q');
+		if($query->num_rows() == 0) return false;
+		foreach ($query->result_array() as  $row) {
+			$data = $row;
+
+		}
+		return $data;
+	}
+
+	public function get_std_group_all(){
+		$this->db->where('std_group !=','99');
+		$query = $this->db->get('std_group');
+		if($query->num_rows() ==0) return false;
+
+		foreach ($query->result_array() as $row) {
+			$data[] = $row;
+		}
+		return $data;
+	}
 }
 
 /* End of file Recheck_model.php */
 /* Location: ./application/models/Recheck_model.php */
+?>

@@ -159,9 +159,9 @@ class Branch_model extends CI_Model {
 		return $data;
 	}
 
-	public	function get_std_quaota($branchId,$search=NULL){
+	public	function get_std_quaota($branchId,$search=NULL,$orderby=NULL){
 		//$data = $this->recheck->merge_quaota_exams($branchId,NULL,NULL,$search);
-		$data = $this->recheck->query_std_quaota($branchId,NULL,NULL,$search);
+		$data = $this->recheck->query_std_quaota($branchId,NULL,NULL,$search,NULL,$orderby);
 		if($data['data'] != false && $data['data'] != ''){
 
 		
@@ -176,9 +176,10 @@ class Branch_model extends CI_Model {
 		return $data;
 	}
 
-		public	function get_std_exams($branchId,$search=NULL){
+		public	function get_std_exams($branchId,$search=NULL,$orderby=NULL){
+			
 		//$data = $this->recheck->merge_quaota_exams($branchId,NULL,NULL,$search);
-		$data = $this->recheck->query_std_exams($branchId,NULL,NULL,$search);
+		$data = $this->recheck->query_std_exams($branchId,NULL,NULL,$search,NULL,$orderby);
 		if($data['data'] != false && $data['data'] != ''){
 
 		
@@ -279,8 +280,9 @@ class Branch_model extends CI_Model {
 			foreach ($query->result_array() as $row) {
 				$data[] = $row['stdCardID'];
 			}
-
+			//var_dump($data);
 			return $data;
+
 		}
 
 			return $query->num_rows();
@@ -324,6 +326,7 @@ class Branch_model extends CI_Model {
 		$this->db->select('std_group');
 		$this->db->where('stdCardID',$stdCardID);
 		$this->db->where('stdApplyNo',$stdApplyNo);
+		$this->db->where('std_group !=','99');
 		$query = $this->db->get('std_group');
 		if($query->num_rows() == 0){
 			return false;

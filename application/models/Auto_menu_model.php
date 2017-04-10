@@ -86,7 +86,7 @@ class Auto_menu_model extends CI_Model {
 			$data[] = $row;
 		}
 
-		$this->menu_high_vocational  = $data;
+		@$this->menu_high_vocational  = $data;
 		return true;
 
 	}

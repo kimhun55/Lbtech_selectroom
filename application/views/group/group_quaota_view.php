@@ -30,6 +30,7 @@
 	    <input type="text" class="form-control" name="search" placeholder="ค้นหา">
 	  </div>
 	  <button type="submit" class="btn btn-default">OK</button>
+	   <a href="<?php echo site_url('group/quaota/'.$branch.'/k/stdGPA');?>"><button type="button" class="btn btn-info ">By GPA</button></a>
 	</form>
 		<br>
 		<div class="table-responsive">
@@ -43,6 +44,7 @@
  					<thead>
  						<tr>
  								<th>#</th>
+ 								<?php if($orderby != NULL) echo "<th>".$orderby."</th>";?>
  								<th>id</th>
  								<th>คำนำหน้า</th>
  								<th>ชื่อ</th>
@@ -60,6 +62,7 @@
  						<tr<?php if($value['std_group_room'] == 99 || $value['std_group_room'] == '') echo ' class="danger" ';?>
  						>
  								<td><?php echo $i++;?></td>
+ 								<?php if($orderby != NULL) echo "<td>".$value[$orderby]."</td>";?>
  								<td><?php echo $value['stdApplyNo'];?>
  									<br> <?php @show_stat_into($value['stat_into']);?>
  									 <?php @show_check_money($value['money']);?>

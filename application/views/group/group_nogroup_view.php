@@ -73,7 +73,9 @@ input[type=checkbox]
  					?>	
  						<tr>
  								<td><?php echo $i++;?></td>
- 								<td><?php echo $value['stdApplyNo'];?><br><?php std_type($value['in']);?> <?php @show_stat_into($value['stat_into']);?> <?php @show_check_money($value['money']);?></td>
+ 								<td><?php echo $value['stdApplyNo'];?><br><?php std_type($value['in']);?> <?php if($value['in'] !='exams') @show_stat_into($value['stat_into']);?> <?php @show_check_money($value['money']);?>
+ 									
+ 								</td>
  								<td><?php echo $value['prefix_id_th'];?></td>
  								<td><?php echo $value['stu_fname_th'];?></td>
  								<td><?php echo $value['stu_lname_th'];?></td>

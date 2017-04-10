@@ -110,7 +110,7 @@
 	}
 
 	function show_stat_into($data=NUll){
-		if($data == 0){
+		if($data == 0 || !isset($data)){
 			echo '<span class="label label-success">มอบตัว</span>';
 		}else{
 			echo '<span class="label label-danger">ไม่มอบตัว</span>';
@@ -126,5 +126,91 @@
 		}
 		return NULL;
 	}
+
+	function show_stat_surrender_exams_teacher($data=NUll){
+		if($data == 1){
+			echo '<span class="label label-success">T.มอบตัว</span>';
+		}else{
+			echo '<span class="label label-danger">T.ไม่มอบตัว</span>';
+		}
+		return NULL;
+	}
+
+	function btn_surrender_exams_teacher($data){
+		$name ='name = "std['.$data['stdCardID'].']['.$data['stdApplyNo'].']"';
+		if($data['surrender'] == 1){
+			$v1c = "active" ;
+			$v1v =	"chacked";
+			$v0c = "" ;
+			$v0v =	"";
+		}else{
+			$v1c = "" ;
+			$v1v =	"";
+			$v0c = "active" ;
+			$v0v =	"chacked";
+
+		}
+		echo '	<div class="btn-group" data-toggle="buttons">
+			
+			<label class="btn btn-success '.$v1c.'">
+				<input type="radio" '.$name.' id="" value=1  '.$v1v.'>
+				<span class="glyphicon glyphicon-ok"></span>
+			</label>
+
+			
+			<label class="btn btn-danger '.$v0c.'" >
+				<input type="radio" '.$name.' id="" value=0 '.$v0v.'>
+				<span class="glyphicon glyphicon-ok"></span>
+			</label>
+		
+		</div>';
+
+		// 
+		// $id = 'id = "'.$data['stdCardID'].'"';
+		// $name ='name = "std['.$data['stdCardID'].']['.$data['stdApplyNo'].']"'; 
+		// if(@$data['surrender'] == 1){
+		// 	$check = 'checked="checked"';
+		// }
+		// echo '	<div class="btn-group" data-toggle="buttons"
+		//  onclick="inputcheck('.$data['stdCardID'].');">		
+		// 		<label class="btn btn-primary">
+		// 			<input '.$id.' '.$name.'  type="radio" value="1" '.@$check.' >
+		// 			<span class="glyphicon glyphicon-ok"></span>
+		// 		</label>
+		// 	</div>';
+
+		// if(@$data['surrender'] == 0 || @$data['surrender'] ==NULL){
+		// 	$check = 'checked="checked"';
+		// }
+		// 	echo '	<div class="btn-group" data-toggle="buttons"
+		//  onclick="inputcheck('.$data['stdCardID'].');">		
+		// 		<label class="btn btn-primary">
+		// 			<input '.$id.' '.$name.'  type="radio" value="0" '.@$check1.' >
+		// 			<span class="glyphicon glyphicon-ok"></span>
+		// 		</label>
+		// 	</div>';
+
+
+
+	// 	if($data['surrender'] == 1){
+	// echo anchor('group/exams_surrender_teacher/'.
+	// 	$data['stdAdmisResult'].'/'.
+	// 	$data['stdCardID'].'/'.
+	// 	$data['stdApplyNo'].'/0', 'ยกเลิกมอบตัว', array('title' => 'The best news!','class'=>'btn btn-warning'));
+
+	// 	}else{
+			
+	// 		echo anchor('group/exams_surrender_teacher/'.
+	// 	$data['stdAdmisResult'].'/'.
+	// 	$data['stdCardID'].'/'.
+	// 	$data['stdApplyNo'].'/1', 'รับมอบตัว', array('title' => 'The best news!','class'=>'btn btn-success'));
+
+
+	// 	}
+		return true;
+
+	}
+
+
 	
 ?>
