@@ -93,7 +93,7 @@
  								<?php if($orderby != NULL) echo "<td>".$value['total']."</td>";?>
  								<td><?php echo $value['stdApplyNo'];?>
  									<br>
- 									<?php echo show_stat_surrender_exams_teacher($value['surrender']); ?>
+ 									<?php echo show_stat_surrender_exams_teacher($value['surrender']); ?> <?php @show_check_money($value['money']);?>
  								</td>
  								<td><?php echo $value['prefix_id_th'];?></td>
  								<td><?php echo $value['stu_fname_th'];?></td>

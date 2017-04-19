@@ -138,3 +138,26 @@ $db['money_quaota'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['money_exams'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'ivecr2_moneyN',
+	'password' => 'Kim0815575706',
+	'database' => 'ivecr2_moneyN',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+

@@ -8,6 +8,7 @@ class Recheck_model extends CI_Model {
 		//Do your magic here
 		$this->set_db_admission();
 		$this->load->model('Money_quaota_model','money_quaota');
+		$this->load->model('Money_exams_model','money_exams');
 	}
 
 	public $admission;
@@ -95,11 +96,29 @@ class Recheck_model extends CI_Model {
 
 		$surrender = $this->get_surrender_exams_teacher();
 
+
+		//check money 
+		$money_check = $this->money_exams->check_money_exams();
+
+
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $row){
 
 				$row = array_merge($row,$this->get_department_by_id($row['stdAdmisResult']));
 				$row['in'] = 'exams';
+
+				//start check money
+				if($money_check !== false){
+					if(isset($money_check[$row['stdApplyNo']])){
+						$row['money'] = 1;
+					}else{
+						$row['money'] = 0;
+					}
+				}
+				//end check money 
+
+
+
 				//check surrender
 					
 					if($surrender !== false){
