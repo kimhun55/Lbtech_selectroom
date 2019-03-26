@@ -23,6 +23,23 @@ class Student extends CI_Controller {
 
 	}
 
+
+	public function file(){
+
+		echo "file";
+		
+
+		$check = $this->student->Export_student_csv();
+		var_dump($check);
+
+
+		echo '<form method="get" action="'.base_url($check).'">
+   <button type="submit">Download!</button>
+</form>';
+
+
+	}
+
 }
 
 /* End of file Student.php */

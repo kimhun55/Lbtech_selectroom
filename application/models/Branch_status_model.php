@@ -31,14 +31,14 @@ class Branch_status_model extends CI_Model {
 					return true;
 				}else{
 					var_dump($result);
-					exit("Admin call");
+					exit("Admin call 1");
 					//return false;
 
 				}
 
 				}else{
 					var_dump($result);
-					exit("Admin call");
+					exit("Admin call 2");
 				}
 
 		}
@@ -75,6 +75,7 @@ class Branch_status_model extends CI_Model {
 
 //=========== status 5 ==================//
 	public function status_main_5($branchId){
+		//echo "b =".$branchId;
 		$branchId_group = $this->get_branchId_group($branchId);
 		//var_dump($branchId_group);
 		//echo '||';
@@ -296,6 +297,8 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 		$this->db->where_in('branch_id',$branchId_array);
 		$query = $this->db->get('branch_status');
 		if($query->num_rows() == 0){
+			//echo $this->db->last_query();
+			//echo "error 221";
 			$data['result'] = false;
 			return $data;
 		}
@@ -306,6 +309,7 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 			if($row['branch_status'] == $status){
 				//$data['data'][] = $row;
 			}else{
+				//echo "error 223";
 				$data['result'] = false;
 				$data['msg'][]= $row['branch_id']." || ".$row['branch_status'];
 			}

@@ -82,6 +82,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="text-center"><h3><a href="https://drive.google.com/file/d/1VxwnaaGZS0fQprxxcXT5hIo287VuivrU/view?usp=sharing">คู่มือการใช้งาน</a></h3></p>
       </form>
 
     </div> <!-- /container -->

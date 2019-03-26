@@ -70,8 +70,8 @@
 	   
 	  </div>
 	  <button type="submit" class="btn btn-default">Send</button>
-	  <?php }//if status  == 2 ?>
-	   <?php } ?>
+	  <?php }?>
+	   <?php }else{ echo $value['std_group_room'];} ?>
 	</form>
  									
  								</td>

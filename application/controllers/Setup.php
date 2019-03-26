@@ -6,6 +6,7 @@ class Setup extends CI_Controller {
 		parent::__construct();
 		//Do your magic here
 		$this->load->model('setup_data_model','setup_data');
+		$this->load->model('setup_group_room_model','group_room');
 		$this->load->model('copyright_model','copyright');
 		$this->load->helper('table');
 	}
@@ -242,6 +243,40 @@ class Setup extends CI_Controller {
 	 	$this->load->view('theme/index', $data, FALSE);
 
 	}
+
+	//functon set_group_room 10/2/2561---> bass
+	public function set_group_room(){
+
+		$content_data['data_department'] = $this->setup_data->get_department_name();
+		if($this->input->post('department_id') != NULL){
+		$content_data['data_where_department'] = $this->group_room->get_department_where_id($this->input->post('department_id'));
+		$content_data['data_vocationl'] = $this->group_room->get_branch_vocational_where_branchId3($content_data['data_where_department']['department_branchId3']);
+		$content_data['data_high_vocationl'] = $this->group_room->get_branch_high_vocational_where_branchId3($content_data['data_where_department']['department_branchId3']);
+
+
+		$content_data['data_room_vocation'] = $this->group_room->get_room_vocation($content_data['data_vocationl']);
+
+		$content_data['data_room_high_vocation'] = $this->group_room->get_room_high_vocation($content_data['data_high_vocationl']);
+		//var_dump($content_data['data_where_department']);
+
+
+		}
+
+
+
+		//set data to theme
+	 	$data['header_data'] = $this->header->output();
+	 	$data['menu_data'] = $this->menu->output();
+	 	$data['content_data']['data'] = $content_data;
+	 	$data['content_view'] = "setup/setup_group_room_view";
+
+	 	$data['footer_data'] = NULL;
+	 	//var_dump($data);
+
+	 	$this->load->view('theme/index', $data, FALSE);
+	}
+
+
 }
 
 /* End of file Setup.php */

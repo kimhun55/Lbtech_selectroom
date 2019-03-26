@@ -27,6 +27,16 @@
  			<?php if($status == 5){ ?>
  			<a href="<?php echo site_url('export_pdf/index/'.$data['branchId']."/".$data_room);?>" target="_blank"><img src="<?php echo base_url("public/img/pdf.png");?>" style="max-width: 25px;"></a>
  			<a href="<?php echo site_url("xlsx/std_room/".$data['branchId']."/".$data_room);?>" target="_blank"><img src="<?php echo base_url("public/img/xlsx.png");?>" style="max-width: 25px;"></a>
+			
+			 <?php
+		      if(in_array("999", $copyright_user)){  ?>
+		      	<a href="<?php echo site_url("export_pdf/std_room_activity/".$data['branchId']."/".$data_room);?>" target="_blank">กิจกรรม</a>||
+		      	<a href="<?php echo site_url("export_pdf/std_room_scan/".$data['branchId']."/".$data_room);?>" target="_blank">นิ้วมือ</a>
+		      	||
+		      	<a href="<?php echo site_url("export_pdf/std_room_orientation/".$data['branchId']."/".$data_room);?>" target="_blank">ปฐมนิเทศ</a>
+
+		     <?php } ?>
+
  			<?php }else{ ?>
 
  			<a href="<?php echo site_url('export_pdf/nocode_pdf_fo_room/'.$data['branchId']."/".$data_room);?>" target="_blank"><img src="<?php echo base_url("public/img/pdf.png");?>" style="max-width: 25px;"></a>

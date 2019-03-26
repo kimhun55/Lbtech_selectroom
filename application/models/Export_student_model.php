@@ -23,7 +23,10 @@ class Export_student_model extends CI_Model {
 			return $data;
 		}
 			$people_id = NULL;
+			$co = 1;
+			echo "count = ".count($data)."\n";
 		foreach ($data as $key => $rs_std) {
+			echo "start \n";
 					
 					$people_id = $rs_std['stdCardID'];
 					
@@ -90,7 +93,17 @@ class Export_student_model extends CI_Model {
 					$cripple_id = convert("cripple_id",$rs_std['cripple_id'],"cripple_name");
 					$school_old_th = $rs_std['school_old_th'];
 					//main $school_name = $rs_std['school_name'];
-					$school_name = convert("school_name",$rs_std['school_old_th'],"school_name");
+					//59 old $school_name = convert("school_name",$rs_std['school_old_th'],"school_name");
+					//60 4/28*/2560
+					if($rs_std['school_id'] != 0){
+					 $school_name = convert("school_name",$rs_std['school_id'],"school_name");
+					}else{
+						if($rs_std['school_old_th1'] ==""){
+							$school_name = '-';
+						}else{
+						$school_name = $rs_std['school_old_th1'];
+						}	
+					}
 					//school_old_th
 					$school_en = $rs_std['school_en'];
 					$school_amphure = convert("school_amphure",$rs_std['school_amphure'],"amphure_name");
@@ -233,17 +246,17 @@ class Export_student_model extends CI_Model {
 								'NAME '=> $name,
 								'BOX'=> '',
 								'IDNO'=> '',
-								'BIRT'=> $birt,
+								'BIRT'=> checkdata_null($birt),
 								'NATI1'=> 'ไทย',
 								'NATI2'=> 'ไทย',
 								'RELI'=> 'พุทธ',
-								'BLGR'=> $std_blgr,
-								'WEIG'=> $weight,
-								'HEIG'=> $tall,
+								'BLGR'=> checkdata_null($std_blgr),
+								'WEIG'=> checkdata_null($weight),
+								'HEIG'=> checkdata_null($tall),
 								'HOST'=> '',
-								'TELL1'=> $fat_tel,
-								'SCOO'=> $school_name,
-								'PROV1'=> $school_province,
+								'TELL1'=> checkdata_null($fat_tel),
+								'SCOO'=> checkdata_null($school_name),
+								'PROV1'=> checkdata_null($school_province),
 								'CRAV'=> $cars_id,
 								'DADY'=> $dady,
 								'MAMY'=> $mamy,
@@ -256,21 +269,21 @@ class Export_student_model extends CI_Model {
 								'TELL3'=>$fri_tel,
 								'GRO'=> $rs_std['group_id'],
 								'GRADE'=>$unit,
-								'DAYIN'=> '16 พฤษภาคม 2559',
+								'DAYIN'=> '15 พฤษภาคม 2561', //**** ตั้งค่า รายปี 
 								'GRD2'=> $gpa,
 								'ONDA'=> '',
-								'SEMES'=>'1/2559',
+								'SEMES'=>'1/2561', //**** ตั้งค่า รายปี 
 								'STAT'=>'',
 								'DAWORK'=>$fat_occupa,
 								'MAWORK'=>$mot_occupa,
-								'ADD1'=>$home_id,
-								'ADD2'=>$home_id,
-								'TUMB1'=>$home_tumbol,
-								'TUMB2'=>$home_tumbol,
-								'AUMP1'=>$home_amphure,
-								'AUMP2'=>$home_amphure,
-								'PROVI1'=>$home_province,
-								'PROVI2'=>$home_province,
+								'ADD1'=>checkdata_null($home_id),
+								'ADD2'=>checkdata_null($home_id),
+								'TUMB1'=>checkdata_null($home_tumbol),
+								'TUMB2'=>checkdata_null($home_tumbol),
+								'AUMP1'=>checkdata_null($home_amphure),
+								'AUMP2'=>checkdata_null($home_amphure),
+								'PROVI1'=>checkdata_null($home_province),
+								'PROVI2'=>checkdata_null($home_province),
 								'ENDSTAT'=>'',
 								'SALARY'=>'',
 								'ENDDATE'=>'',
@@ -287,58 +300,58 @@ class Export_student_model extends CI_Model {
 								'ADDMARK'=>'',
 								'TOLMARK'=>'',
 								'OLDGRADE'=>'',
-								'POST1'=>$home_post,
-								'COSEMES'=>$cosemes,
+								'POST1'=>checkdata_null($home_post),
+								'COSEMES'=>checkdata_null($cosemes),
 								'OLDCRE'=>'',
 								'PERCENTILE'=>'',
-								'BIRTHDAY'=>$birthday,
-								'PRE_NAME'=>$prefix_id_th,
-								'FNAME'=>$stu_fname_th,
-								'LNAME'=>$stu_lname_th,
+								'BIRTHDAY'=>checkdata_null($birthday),
+								'PRE_NAME'=>checkdata_null($prefix_id_th),
+								'FNAME'=>checkdata_null($stu_fname_th),
+								'LNAME'=>checkdata_null($stu_lname_th),
 								'ENDYEAR'=>'',
-								'PIN_ID'=>$people_id,
-								'SEX'=>$gender_id,
-								'ABILITY'=>$cripple_id,
-								'ACTIVITY'=>$std_expert_id,
-								'FAMILY'=>$mot_mar_status,
-								'TOTAL_BOY'=>$total_boy,
-								'TOTAL_EDU'=>$total_edu,
-								'NICKNAME'=>$stu_nickname,
-								'GOTWORK'=>$par_occupa,
-								'GOTSALY'=>$par_salary,
-								'GOTRELA'=>$par_relation,
-								'BROTHER'=>$qty_cousin,
-								'SISTER'=>$qty_brother,
-								'SON_NO'=>$qty_child,
-								'AGE'=>$age,
-								'VIL2'=>$par_housename,
-								'SOI2'=>$par_soi,
-								'ROAD2'=>$par_street,
-								'CRACK'=>$blame,
-								'SICK'=>$congen,
+								'PIN_ID'=>checkdata_null($people_id),
+								'SEX'=>checkdata_null($gender_id),
+								'ABILITY'=>checkdata_null($cripple_id),
+								'ACTIVITY'=>checkdata_null($std_expert_id),
+								'FAMILY'=>checkdata_null($mot_mar_status),
+								'TOTAL_BOY'=>checkdata_null($total_boy),
+								'TOTAL_EDU'=>checkdata_null($total_edu),
+								'NICKNAME'=>checkdata_null($stu_nickname),
+								'GOTWORK'=>checkdata_null($par_occupa),
+								'GOTSALY'=>checkdata_null($par_salary),
+								'GOTRELA'=>checkdata_null($par_relation),
+								'BROTHER'=>checkdata_null($qty_cousin),
+								'SISTER'=>checkdata_null($qty_brother),
+								'SON_NO'=>checkdata_null($qty_child),
+								'AGE'=>checkdata_null($age),
+								'VIL2'=>checkdata_null($par_housename),
+								'SOI2'=>checkdata_null($par_soi),
+								'ROAD2'=>checkdata_null($par_street),
+								'CRACK'=>checkdata_null($blame),
+								'SICK'=>checkdata_null($congen),
 								'FSEMES'=>'1',
-								'FYEAR'=>'2559',
-								'AMPER'=>$school_amphure,
-								'OLDID1'=>$tran_no,
-								'OLDID2'=>$tran,
+								'FYEAR'=>'2561',
+								'AMPER'=>checkdata_null($school_amphure),
+								'OLDID1'=>checkdata_null($tran_no),
+								'OLDID2'=>checkdata_null($tran),
 								'COPYADDR'=>'',
-								'VIL1'=>$home_name,
-								'SOI1'=>$home_soi,
-								'ROAD1'=>$home_street,
-								'TYPE_EDU'=>$sele_by_id,
-								'BPROVITE'=>$home_province,
-								'BAMPER'=>$home_amphure,
-								'BTUMBOL'=>$home_tumbol,
+								'VIL1'=>checkdata_null($home_name),
+								'SOI1'=>checkdata_null($home_soi),
+								'ROAD1'=>checkdata_null($home_street),
+								'TYPE_EDU'=>checkdata_null($sele_by_id),
+								'BPROVITE'=>checkdata_null($home_province),
+								'BAMPER'=>checkdata_null($home_amphure),
+								'BTUMBOL'=>checkdata_null($home_tumbol),
 								'STD_VER'=>'',
 								'STD_ROOM'=>'',
-								'POST2'=>$home_post,
-								'STD_EDU'=>$std_edu,
-								'STD_LEVEL'=>$std_level,
+								'POST2'=>checkdata_null($home_post),
+								'STD_EDU'=>checkdata_null($std_edu),
+								'STD_LEVEL'=>checkdata_null($std_level),
 								'DASALARY'=>'',
 								'MASALARY'=>'',
-								'OLD_TYPSCH'=>$sch_type_id,
-								'GRADUATE'=>$edu_level_id,
-								'DEPWORK'=>$depwork,
+								'OLD_TYPSCH'=>checkdata_null($sch_type_id),
+								'GRADUATE'=>checkdata_null($edu_level_id),
+								'DEPWORK'=>checkdata_null($depwork),
 								'GPA21'=>'0',
 								'GPA22'=>'0',
 								'GPA23'=>'0',
@@ -348,22 +361,22 @@ class Export_student_model extends CI_Model {
 								'GPA27'=>'0',
 								'GPA28'=>'0',
 								'GRADE_ID'=>'0',
-								'DA_PRENAME'=>$fat_prefix_id_th,
-								'DA_FNAME'=>$fat_fname_th,
-								'DA_LNAME'=>$fat_lname_th,
-								'DA_CRIPPLE'=>$fat_cripple,
-								'DA_STATUS'=>$fat_mar_status,
-								'MA_PRENAME'=>$mot_prefix_id_th,
-								'MA_FNAME'=>$mot_fname_th,
-								'MA_LNAME'=>$mot_lname_th,
-								'MA_CRIPPLE'=>$mot_cripple,
-								'MA_STATUS'=>$mot_mar_status,
-								'GO_PRENAME'=>$par_prefix,
-								'GO_FNAME'=>$par_fname,
-								'GO_LNAME'=>$par_lname,
-								'MOO1'=>$home_moo,
-								'MOO2'=>$par_moo,
-								'HOME_ID'=>$home_code,
+								'DA_PRENAME'=>checkdata_null($fat_prefix_id_th),
+								'DA_FNAME'=>checkdata_null($fat_fname_th),
+								'DA_LNAME'=>checkdata_null($fat_lname_th),
+								'DA_CRIPPLE'=>checkdata_null($fat_cripple),
+								'DA_STATUS'=>checkdata_null($fat_mar_status),
+								'MA_PRENAME'=>checkdata_null($mot_prefix_id_th),
+								'MA_FNAME'=>checkdata_null($mot_fname_th),
+								'MA_LNAME'=>checkdata_null($mot_lname_th),
+								'MA_CRIPPLE'=>checkdata_null($mot_cripple),
+								'MA_STATUS'=>checkdata_null($mot_mar_status),
+								'GO_PRENAME'=>checkdata_null($par_prefix),
+								'GO_FNAME'=>checkdata_null($par_fname),
+								'GO_LNAME'=>checkdata_null($par_lname),
+								'MOO1'=>checkdata_null($home_moo),
+								'MOO2'=>checkdata_null($par_moo),
+								'HOME_ID'=>checkdata_null($home_code),
 								'EDU_ID'=>'1',
 								'EDU_STATUS'=>'กำลังศึกษาอยู่',
 								'STATUS_ID'=>'',
@@ -377,7 +390,7 @@ class Export_student_model extends CI_Model {
 								'room_std_code' => $rs_std['room_std_code'],
 								'room_group_id' => $rs_std['room_group_id']
 					);
-					echo $code." ".$group_id."<br>";
+					echo $co++." = ".$code." ".$group_id."\n";
 					//$where="CODE='$code' ";
 					/*echo "<pre>";
 					var_dump($data_insert);
@@ -387,6 +400,7 @@ class Export_student_model extends CI_Model {
 					if(!$check){
 						exit('error_data insert');
 					}
+					echo "OK \n";
 					//exit();
 					unset($data_insert);
 
@@ -399,12 +413,13 @@ class Export_student_model extends CI_Model {
 
 	}
 	public function student_get_data(){
-		//$this->db->where('stdCardID','1160101711988');
-		$this->db->limit(0,20);
+		//$this->db->where('stdCardID','1169800241521');
+		//$this->db->limit(0,20);
 		$this->db->order_by('room_group_id ASC, room_std_code ASC');
 		$query = $this->db->get('tblcandidate');
 		echo $this->db->last_query();
 		echo '<br>';
+		echo "data sum = ".$query->num_rows()."<br>";
 		//exit();
 
 		if($query->num_rows() == 0)
@@ -439,6 +454,65 @@ class Export_student_model extends CI_Model {
 		}
 
 	}
+
+
+	public function  check_folder(){
+		$path_folder = "public/student_file_export";
+		if(!file_exists($path_folder)){
+			$check = mkdir($path_folder, 0777, true);
+			if(!$check){
+				//exit("error mkdir @path_folder");
+				return false;
+			}
+
+		}
+
+		return true;
+
+	}
+
+	public function Export_student_csv(){
+		$this->check_folder();
+
+		$this->db->order_by('CODE', 'ASC');
+		$query = $this->db->get("student");
+
+		$path_folder = "public/student_file_export/";
+
+		$myfile = fopen($path_folder."Export_student_csv_".date("Y-m-d-H-i-s").".csv", "w") or die("Unable to open file!");
+
+		$tel = array("TELL1","BIRT","TELL2","TELL3","STD_PHONE","SEMES","ADD1","ADD2");
+
+			foreach ($query->result_array() as $row)
+			{
+				unset($data);
+				foreach ($row as $key => $value) {
+
+					if(in_array($key,$tel)){
+						$data[] = '="'.$value.'"';
+
+					}else{
+						$data[] = '"'.$value.'"';
+
+					}
+
+					
+				}
+				$txt = implode(',', $data);
+				fwrite($myfile, $txt."\n");
+
+			}
+
+			fclose($myfile);
+
+
+			return $path_folder."Export_student_csv_".date("Y-m-d-H-i-s").".csv";
+	}
+
+
+
+
+	
 
 	
 

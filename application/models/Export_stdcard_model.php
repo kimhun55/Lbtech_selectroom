@@ -20,9 +20,9 @@ class Export_stdcard_model extends CI_Model {
 			unset($insert_data);
 			unset($insert);
 			$insert_data = $this->set_format_insert_tblstd_idcard($value);
-			echo "<pre>";
-			var_dump($insert_data);
-			echo "</pre>";
+			// echo "<pre>";
+			// var_dump($insert_data);
+			// echo "</pre>";
 			$insert = $this->db->insert('tblstd_idcard', $insert_data);
 			if(!$insert){
 				exit('error insert data tblstd_idcard');

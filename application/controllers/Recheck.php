@@ -146,6 +146,25 @@ class Recheck extends CI_Controller {
 
 	}
 
+	public function checktblcandidategroup(){
+		//$data['content_data']['data'] = $data;
+		//set titile
+	 	$this->header->get_title("check tblcandidate group");
+	 	$this->menu->get_menu_navbar("recheck");
+
+
+	 	//set data to theme
+	 	$data['header_data'] = $this->header->output();
+	 	$data['menu_data'] = $this->menu->output();
+	 	//$data['content_data'] = $content_data;
+	 	$data['content_view'] = "recheck/checktblcandidategroup_view";
+	 	$data['footer_data'] = NULL;
+	 	//var_dump($data);
+	 		
+	 	//load view
+	 	$this->load->view('theme/index', $data, FALSE);
+	}
+
 
 	
 

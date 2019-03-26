@@ -24,7 +24,9 @@
 			<div class="col-sm-6 col-md-4"> 
 			<div class="thumbnail list-group-item-success"> 
 				<div class="caption"> 
-					<h3><?php echo $value['branch']?></h3> 
+					<h3><?php 
+					mb_internal_encoding("UTF-8");
+					echo mb_substr($value['branch'],0,25); ?></h3> 
 					<p>สาขางาน : <?php echo $value['major']?>
 					<br>
 					Lavel : <?php echo $value['level'];?>

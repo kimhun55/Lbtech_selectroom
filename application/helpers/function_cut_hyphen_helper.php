@@ -49,6 +49,7 @@ function convert($field_name,$value,$select=NULL){
 	$ci=& get_instance();
     $ci->load->database();
 	$admission = $ci->load->database('admission', TRUE);
+	$dbmain = $ci->load->database('default', TRUE);
 	$convert_field = array('std_expert_id' => array(
 															"case"	=> 1,
 															"field_name" => "std_expert_id",
@@ -129,7 +130,8 @@ function convert($field_name,$value,$select=NULL){
 															"table_name" => "tblstudent_total",
 															"table_where" => "tblgroup_id",
 															"field_name_where" => "group_id",
-															"field_name_select" => "course,level_name,branch_name,major_name"
+															"field_name_select" => "course,level_name,branch_name,major_name",
+															"selectdb" =>"selectroom"
 														),
 								'nation_id' => array(
 															"case"	=> 0,
@@ -399,7 +401,12 @@ function convert($field_name,$value,$select=NULL){
 		
 		$sql = "SELECT ".$convert_field[$field_name]['field_name_select']." FROM ".$convert_field[$field_name]['table_where']." WHERE ".$convert_field[$field_name]['field_name_where']." = '".$value."'";
 		//echo "==>".$sql;
-		$query = $admission->query($sql);
+		if($convert_field[$field_name]['selectdb'] == "selectroom"){
+			$query = $dbmain->query($sql);
+		}else{
+			$query = $admission->query($sql);
+		}
+		
 		//var_dump($query);
 		
 		$result = $query->row_array();
@@ -419,12 +426,22 @@ function convert($field_name,$value,$select=NULL){
 			//echo "666";
 			return $result[$select];
 		}
-		
+		//exit();
 		
 	}else{
 		return $data['error'] = "ERROR not field case function";
-	}							
+	}		
+
+	exit("error");					
 								
+}
+
+
+function checkdata_null($data){
+	if($data == '' || $data == NULL){
+		$data = '-';
+	}
+	return $data;
 }
 
 

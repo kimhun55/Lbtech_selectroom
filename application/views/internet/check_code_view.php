@@ -21,7 +21,7 @@
   <body>
    <div class="container">
 	<div class="page-header">
-  		<h1>ระบบตรวจสอบรหัสนักศึกษา ใหม่ 2559 <small>by ศูนย์ข้อมูลวิทยาลัยเทคนิคลพบุรี</small></h1>
+  		<h1>ระบบตรวจสอบรหัสนักศึกษา ใหม่ 2560 <small>by ศูนย์ข้อมูลวิทยาลัยเทคนิคลพบุรี</small></h1>
 	</div>
 
    <form class="form-inline" style="text-align: center;" method="post" action="<?php echo site_url('internet/');?>">

@@ -79,53 +79,66 @@ $this->pdf->AddPage('p', 'A4');
 					
 					//$this->pdf->Cell(10,$contentH1,iconv("UTF-8","TIS-620",""),1,0,'C');
 					//$this->pdf->Cell(25,$contentH1,iconv("UTF-8","TIS-620",""),1,0,'C');
-					$this->pdf->Cell(83,$contentH1,iconv("UTF-8","TIS-620",""),1,0,'L');
+					//$this->pdf->Cell(83,$contentH1,iconv("UTF-8","TIS-620",""),1,0,'L');
 
-					$this->pdf->Cell(10,0,iconv("UTF-8","TIS-620",""),0,1,'L');
-					$this->pdf->Cell(10,5.5,iconv("UTF-8","TIS-620","รหัส___________________หน่วยกิต____________"),0,1,'L');
-					$this->pdf->Cell(10,5.5,iconv("UTF-8","TIS-620","ชื่อวิชา_____________________________________"),0,1,'L');
-
-					$y = date('Y')+543;
-					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ปีการศึกษา_____/".$y),0,1,'L');
-					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ระดับ ". $level_name." สาขา".$branch_name." กลุ่ม ".$group_name." ".$course_name),0,1,'L');
-					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ชื่อครูผู้สอน ________________________________"),0,1,'L');
-					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ครูที่ปรึกษา    ".$teacher_fname." ".$teacher_lname),0,0,'L');
+					//$this->pdf->Cell(10,0,iconv("UTF-8","TIS-620",""),0,1,'L');
+					//$this->pdf->Cell(10,5.5,iconv("UTF-8","TIS-620","รหัส___________________หน่วยกิต____________"),0,1,'L');
+					//$this->pdf->Cell(10,5.5,iconv("UTF-8","TIS-620","ชื่อวิชา_____________________________________"),0,1,'L');
+					//$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ปีการศึกษา_____/2561"),0,1,'L');
+				
+					//$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ชื่อครูผู้สอน ________________________________"),0,1,'L');
+					//$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ครูที่ปรึกษา    ".$teacher_fname." ".$teacher_lname),0,0,'L');
 					$this->pdf->SetXY(88,5);
-					$this->pdf->SetFont('angsana','B',13);
-					$this->pdf->Cell(115.5,10,iconv("UTF-8","TIS-620",""),1,1,''); // กรอบสี่เหลี่ยมมุมบนขวามือ
+					$this->pdf->SetFont('angsana','B',16);
+					//$this->pdf->Cell(115.5,10,iconv("UTF-8","TIS-620",""),1,1,''); // กรอบสี่เหลี่ยมมุมบนขวามือ
 					$this->pdf->SetXY(7,5);
-					$this->pdf->Cell(285,5.5,iconv("UTF-8","TIS-620","วิทยาลัยเทคนิคลพบุรี"),0,1,'C');
+					$this->pdf->Cell(220,7,iconv("UTF-8","TIS-620","วิทยาลัยเทคนิคลพบุรี"),0,1,'C');
 
-					$this->pdf->SetFont('angsana','',11);
-					$this->pdf->Cell(287,4.5,iconv("UTF-8","TIS-620","หลักฐานการบันทึกเวลาเรียน"),0,1,'C');
-					//จำนวนสัปห์ดา
-					$contentHday=6;
-					$this->pdf->SetXY(88,15);
-					for($i=0; $i<18; $i++){
-						$this->pdf->Cell($contentHday,5,iconv("UTF-8","TIS-620","".($i+1)),1,0,'C');
-					}
+					$this->pdf->SetFont('angsana','',16);
+					$this->pdf->Cell(218,7,iconv("UTF-8","TIS-620","แบบบันทึกการเข้าร่วมกิจกรรม"),0,1,'C');
+					$this->pdf->Cell(220,7,iconv("UTF-8","TIS-620","ระดับ ". $level_name." สาขา".$branch_name." กลุ่ม ".$group_name." ".$course_name),0,1,'C');
+					$this->pdf->SetXY(50,25);
+					$this->pdf->Cell(115,7,iconv("UTF-8","TIS-620",""),'B',0,'C');//เส้นแนวนอน
 					
-					$this->pdf->Cell(7.4,261,iconv("UTF-8","TIS-620",""),1,0,'C');//ความยาวรวมช่องขาดเรียน
+					
+					//จำนวนสัปห์ดา
+					//$contentHday=6;
+					//$this->pdf->SetXY(88,30);
+					//for($i=0; $i<18; $i++){
+						//$this->pdf->Cell($contentHday,5,iconv("UTF-8","TIS-620",""),1,0,'C');
+					//}
+					
+					//$this->pdf->Cell(7.4,261,iconv("UTF-8","TIS-620",""),1,0,'C');//ความยาวรวมช่องขาดเรียน
 					//$this->pdf->Cell(7.4,27,iconv("UTF-8","TIS-620","รวมเวลาเรียน"),0,0,'C');
 					
 
 					//ช่องเชคขาด
-					$contentWck=3;
-					$contentHck=256;//22
-					$this->pdf->SetXY(88,20);
-					for($i=0; $i<36; $i++){
-						$this->pdf->Cell($contentWck,$contentHck,iconv("UTF-8","TIS-620",""),1,0,'C');
-					}
-					$this->pdf->Ln();
+					//$contentWck=25;
+					//$contentHck=156;//22
+					$this->pdf->SetXY(88,38);
+					$this->pdf->Cell(40,238,iconv("UTF-8","TIS-620",""),1,0,'C');
+					$this->pdf->SetXY(128,38);
+					$this->pdf->Cell(40,238,iconv("UTF-8","TIS-620",""),1,0,'C');
+					$this->pdf->SetXY(168,38);
+					$this->pdf->Cell(35.5,238,iconv("UTF-8","TIS-620",""),1,0,'C');
+					//for($i=0; $i<36; $i++){
+						
+						//$this->pdf->Cell(40,200,iconv("UTF-8","TIS-620",""),1,0,'C');
+					//}
+					//$this->pdf->Ln();
 					
 					$this->pdf->SetXY(5,38);
 					$this->pdf->SetFont('angsana','',13.5);
 					$this->pdf->Cell(8,7,iconv("UTF-8","TIS-620","ลำดับ"),1,0,'C');
 					$this->pdf->Cell(20,7,iconv("UTF-8","TIS-620","รหัสประจำตัว"),1,0,'C');
 					$this->pdf->Cell(55,7,iconv("UTF-8","TIS-620","ชื่อ - นามสกุล"),1,0,'C');
-					$this->pdf->Cell(108,7,iconv("UTF-8","TIS-620",""),'LB',0,'C');//เส้นแนวนอน
+					$this->pdf->Cell(40,7,iconv("UTF-8","TIS-620","ตรวจสุขภาพ"),1,0,'C');
+					
+					$this->pdf->Cell(40,7,iconv("UTF-8","TIS-620","ปฐมนิเทศ"),1,0,'C');
+					$this->pdf->Cell(35.5,7,iconv("UTF-8","TIS-620","เข้าค่ายฯ"),1,0,'C');
+					//$this->pdf->Cell(108,7,iconv("UTF-8","TIS-620",""),'LB',0,'C');//เส้นแนวนอน
 					//$this->pdf->SetXY(3,90);
-					$this->pdf->Cell(7.5,7,iconv("UTF-8","TIS-620","คาบ"),1,0,'C');
+					//$this->pdf->Cell(7.5,7,iconv("UTF-8","TIS-620","คาบ"),1,0,'C');
 					
 					//$this->pdf->SetXY(215,108);
 					//$this->pdf->Image("total-hour.jpg",197,16,5.5,21.5);//รายเซ็น boss ,ระยะรูปห่างจากขอบบัตร,ระยะรูปห่างจากขอบบน,ความกว้างของรูป,ความสูงของรูป
