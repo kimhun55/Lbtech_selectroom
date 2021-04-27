@@ -38,6 +38,8 @@ class Recheck extends CI_Controller {
 		$content_data = $this->recheck->std_full();
 		$this->load->helper('table');
 		$content_data['table']  = dataTotable($content_data['data']);
+
+		
 		/*
 		echo "<pre>";
 		echo "count exams =".$data['exams']['count']."<br>";

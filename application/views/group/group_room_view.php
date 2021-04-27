@@ -34,6 +34,8 @@
 		      	<a href="<?php echo site_url("export_pdf/std_room_scan/".$data['branchId']."/".$data_room);?>" target="_blank">นิ้วมือ</a>
 		      	||
 		      	<a href="<?php echo site_url("export_pdf/std_room_orientation/".$data['branchId']."/".$data_room);?>" target="_blank">ปฐมนิเทศ</a>
+		      		||
+		      	<a href="<?php echo site_url("export_pdf/std_room_ethics/".$data['branchId']."/".$data_room);?>" target="_blank">จริยธรรม</a>
 
 		     <?php } ?>
 

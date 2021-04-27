@@ -1,5 +1,8 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+// update UPDATE tblgroup_id SET branch_id = CONCAT('20',SUBSTRING(branch_id, 2, 100)) WHERE level_id = 1 -> 18/5/20202 bass
+//update year UPDATE tblgroup_id SET group_id = CONCAT('63',SUBSTRING(group_id, 3, 100))
+//update major UPDATE tblgroup_id SET major_id = CONCAT('63',brand_id)
+//update 18/5/2020
 class Setup extends CI_Controller {
 	public function __construct()
 	{

@@ -57,7 +57,7 @@ class Recheck_model extends CI_Model {
 		}
 		$this->admission->select("stdCardID,stdApplyNo,prefix_id_th,stu_fname_th,stu_lname_th,stdAdmisResult,stat_into,stdAdmisResult,total")
 						->from('tblcandidate')
-						//->where('stat_into','0')
+						->where('stat_into','0')
 						->where('round>','0');
 		if($orderby == NULL){
 			$this->admission->order_by('stdApplyNo','ASC');
@@ -85,7 +85,7 @@ class Recheck_model extends CI_Model {
 
 		$query = $this->admission->get();
 
-		//echo $this->admission->last_query();
+		$data['exams_query'] = $this->admission->last_query();
 		//exit();
 		if($query->num_rows() == 0){
 			$data['data'] = false;
@@ -193,7 +193,7 @@ class Recheck_model extends CI_Model {
 		}
 
 		$query = $this->admission->get();
-		//echo " || ".$this->admission->last_query();
+		$data['quaota_query'] = $this->admission->last_query();
 		if($query->num_rows() == 0){
 			$data['data'] = false;
 			$data['key'] =false;
@@ -258,8 +258,9 @@ class Recheck_model extends CI_Model {
 	public function merge_quaota_exams($branchId=NULL,$stdCardID=NULL,$where_stdCardID=NULL,$search=NULL){
 		//echo "(".$search.")";
 		$data['exams'] = $this->query_std_exams($branchId,$stdCardID,$where_stdCardID,$search);
-		//$data['exams'] = NULL;
+		$data_return['exams_query'] = $data['exams']['exams_query'];
 		$data['quaota'] = $this->query_std_quaota($branchId,$stdCardID,$where_stdCardID,$search);
+		$data_return['quaota_query'] = $data['quaota']['quaota_query'];
 		//$data['quaota'] = NULL;
 
 		
@@ -291,7 +292,7 @@ class Recheck_model extends CI_Model {
 
 	//Dep count by std
 	public function get_dep_count_by_std(){
-		$query_exams = $this->admission->query("SELECT stdAdmisResult,COUNT(stdAdmisResult) AS count FROM `tblcandidate` WHERE round > '0' AND stdAdmisResult !='' GROUP BY stdAdmisResult");
+		$query_exams = $this->admission->query("SELECT stdAdmisResult,COUNT(stdAdmisResult),stat_into AS count FROM `tblcandidate` WHERE stat_into = 0 AND round > '0' AND stdAdmisResult !='' GROUP BY stdAdmisResult");
 		foreach ($query_exams->result_array() as $row)
 		{		
 				$row['count'] = intval($row['count']);

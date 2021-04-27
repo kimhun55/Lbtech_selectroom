@@ -87,7 +87,7 @@ $this->pdf->AddPage('p', 'A4');
 
 					$y = date('Y')+543;
 					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ปีการศึกษา_____/".$y),0,1,'L');
-					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ระดับ ". $level_name." สาขา".$branch_name." กลุ่ม ".$group_name." ".$course_name),0,1,'L');
+					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ระดับ ". $group_name." สาขางาน ".$branch_name." ".$course_name),0,1,'L');
 					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ชื่อครูผู้สอน ________________________________"),0,1,'L');
 					$this->pdf->Cell(20,5.5,iconv("UTF-8","TIS-620","ครูที่ปรึกษา    ".$teacher_fname." ".$teacher_lname),0,0,'L');
 					$this->pdf->SetXY(88,5);

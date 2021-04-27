@@ -77,7 +77,7 @@
  								<th>ชื่อ</th>
  								<th>นามสกุล</th>
  								<th style="text-align: center;">กลุ่ม</th>
- 								<th>ครู รับมอบตัว</th>
+ 								<!-- <th>ครู รับมอบตัว</th> -->
  						</tr>
  					</thead>
 
@@ -93,7 +93,8 @@
  								<?php if($orderby != NULL) echo "<td>".$value['total']."</td>";?>
  								<td><?php echo $value['stdApplyNo'];?>
  									<br>
- 									<?php echo show_stat_surrender_exams_teacher($value['surrender']); ?> <?php @show_check_money($value['money']);?>
+									 <?php @show_stat_into($value['stat_into']);?>
+ 									<?php //echo show_stat_surrender_exams_teacher($value['surrender']); ?> <?php @show_check_money($value['money']);?>
  								</td>
  								<td><?php echo $value['prefix_id_th'];?></td>
  								<td><?php echo $value['stu_fname_th'];?></td>
@@ -116,7 +117,7 @@
 	   <?php } ?>
 		</td>
  						
- 						<td align="center"><?php btn_surrender_exams_teacher($value);?></td>
+ 						<!-- <td align="center"><?php btn_surrender_exams_teacher($value);?></td> -->
  						</tr>
  					<?php } }?>
  					</tbody>

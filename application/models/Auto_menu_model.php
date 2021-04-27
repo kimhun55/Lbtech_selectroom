@@ -29,13 +29,27 @@ class Auto_menu_model extends CI_Model {
 		return $this->id;
 	}
 
+	public function first_branch_status($branchId){
+		$data = array('branch_id' => $branchId,
+						'branch_status' => 1,
+						'u_id'	=> 1,
+						'branch_datetime' => date('Y-m-d H:i:s')
+		);
+
+		$query = $this->db->insert('branch_status',$data);
+
+		return true;
+	}
 	/*------------ status check menu -------------*/
 	public function get_branch_status($branchId){
 		$this->db->where('branch_id',$branchId);
 		$this->db->select('branch_status');
 		$query = $this->db->get('branch_status');
-		if($query->num_rows() == 0)
-			return false;
+		if($query->num_rows() == 0){
+			
+			$this->first_branch_status($branchId);
+			$this->get_branch_status($branchId);
+		}
 
 		$row = $query->row_array();
 

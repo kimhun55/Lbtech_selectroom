@@ -95,7 +95,7 @@ $this->pdf->AddPage('p', 'A4');
 					$this->pdf->Cell(200,7,iconv("UTF-8","TIS-620","วิทยาลัยเทคนิคลพบุรี"),0,1,'C');
 
 					$this->pdf->SetFont('angsana','',16);
-					$this->pdf->Cell(200,7,iconv("UTF-8","TIS-620","แบบบันทึกการเข้าร่วมกิจกรรมจัดทำฐานข้อมูลสแกนลายนิ้วมือ"),0,1,'C');
+					$this->pdf->Cell(190,7,iconv("UTF-8","TIS-620","แบบบันทึกการเข้าร่วมกิจกรรมจัดทำฐานข้อมูลสแกนลายนิ้วมือ ปีการศึกษา 2562"),0,1,'C');
 					$this->pdf->Cell(200,7,iconv("UTF-8","TIS-620","ระดับ ". $level_name." สาขา".$branch_name." กลุ่ม ".$group_name." ".$course_name),0,1,'C');
 					$this->pdf->SetXY(50,25);
 					$this->pdf->Cell(115,7,iconv("UTF-8","TIS-620",""),'B',0,'C');//เส้นแนวนอน

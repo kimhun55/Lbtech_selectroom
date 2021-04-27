@@ -25,6 +25,7 @@ class Export_student_model extends CI_Model {
 			$people_id = NULL;
 			$co = 1;
 			echo "count = ".count($data)."\n";
+			//exit();
 		foreach ($data as $key => $rs_std) {
 			echo "start \n";
 					
@@ -234,9 +235,9 @@ class Export_student_model extends CI_Model {
 					//echo $group_id."*****";	exit();				
 					//หลักสุตร
 					if($std_level=="ปวช.1"){
-						$cosemes="ปวช.56";
+						$cosemes="ปวช.64";
 					}else{
-						$cosemes="ปวส.57";
+						$cosemes="ปวส.64";
 					}
 					
 					//echo " => ".$name."=>".$school_name."=>".$school_province."=>".$qty_cousin."=>".$qty_brother."=>".$qty_study_broth." => ".$total_boy."=>".$total_edu."<br>";
@@ -269,7 +270,7 @@ class Export_student_model extends CI_Model {
 								'TELL3'=>$fri_tel,
 								'GRO'=> $rs_std['group_id'],
 								'GRADE'=>$unit,
-								'DAYIN'=> '15 พฤษภาคม 2561', //**** ตั้งค่า รายปี 
+								'DAYIN'=> '13 พฤษภาคม 2564', //**** ตั้งค่า รายปี 
 								'GRD2'=> $gpa,
 								'ONDA'=> '',
 								'SEMES'=>'1/2561', //**** ตั้งค่า รายปี 
@@ -479,7 +480,9 @@ class Export_student_model extends CI_Model {
 
 		$path_folder = "public/student_file_export/";
 
-		$myfile = fopen($path_folder."Export_student_csv_".date("Y-m-d-H-i-s").".csv", "w") or die("Unable to open file!");
+		$name = "Export_student_csv_".date("Y-m-d-H-i-s").".csv";
+
+		$myfile = fopen($path_folder.$name, "w") or die("Unable to open file!");
 
 		$tel = array("TELL1","BIRT","TELL2","TELL3","STD_PHONE","SEMES","ADD1","ADD2");
 
@@ -506,7 +509,8 @@ class Export_student_model extends CI_Model {
 			fclose($myfile);
 
 
-			return $path_folder."Export_student_csv_".date("Y-m-d-H-i-s").".csv";
+			//return $path_folder."Export_student_csv_".date("Y-m-d-H-i-s").".csv";
+			return $path_folder.$name;
 	}
 
 

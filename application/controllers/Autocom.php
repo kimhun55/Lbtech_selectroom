@@ -25,3 +25,4 @@ class Autocom extends CI_Controller {
 
 /* End of file Autocom.php */
 /* Location: ./application/controllers/Autocom.php */
+// kkkkk

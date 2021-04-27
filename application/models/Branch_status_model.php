@@ -126,17 +126,45 @@ class Branch_status_model extends CI_Model {
 	}
 	//auto code std
 	public function auto_code_std($group_array){
-		$w = substr(end($group_array),0,6);
+		// echo "<pre>";
+		// var_dump($group_array);
+		// echo "</pre>";
+
+		if(substr(end($group_array),2,1) == "3" ){
+			echo "if 3";
+			$w = substr(end($group_array),0,6);
+			$n = 3;
+		}else{
+			echo "if else";
+			$w = substr(end($group_array),0,7);
+			$n = 2;
+		}
+
+		//echo "W : = ".$w;
 		$query = $this->db->query("SELECT stdCardID, stu_fname_th, stu_lname_th, room_group_id, room_std_group FROM tblcandidate
 WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_lname_th");
+
+		
 		if($query->num_rows() == 0){
 			return false;
 		}
 		
 		$i = 1;
 		foreach ($query->result_array() as $key => $row) {
-			if(strlen($row['room_group_id']) == 8){
-				$head_code = substr($row['room_group_id'],0,6);
+			if(strlen($row['room_group_id']) == 9 || strlen($row['room_group_id']) == 8){
+				if($n == "3"){
+					//echo " n|3";
+					$head_code = substr($row['room_group_id'],0,6);
+				}else{
+					//echo "n|2";
+					$head_code = substr($row['room_group_id'],0,7);
+				}
+				
+			}
+
+			//check head_code
+			if($head_code == ""){
+				exit(" head_code null ");
 			}
 			
 			$code = '';
@@ -191,7 +219,7 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 		if($check === false){
 			exit("error delete_cleaning_candidate");
 		}
-
+		//var_dump($data_group);
 		foreach ($data_group as $key=>$row) {
 			$where['stdCardID'] = $row['stdCardID'];
 			if( $row['stdApplyNo'] == '0' ){
@@ -282,6 +310,7 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 	public function get_std_group($branchId_array){
 		$this->db->where_in('branchId',$branchId_array);
 		$query = $this->db->get('std_group');
+		//echo " |get_std_group| ".$this->db->last_query();
 			if($query->num_rows() == 0)
 			return false;
 
@@ -297,8 +326,8 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 		$this->db->where_in('branch_id',$branchId_array);
 		$query = $this->db->get('branch_status');
 		if($query->num_rows() == 0){
-			//echo $this->db->last_query();
-			//echo "error 221";
+			echo $this->db->last_query();
+			echo "error 221";
 			$data['result'] = false;
 			return $data;
 		}
@@ -339,14 +368,26 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 	
 	public function get_group_array($branchId){
 		$data_branch = $this->get_data_branch($branchId);
-		if($data_branch === false)
+		if($data_branch === false){
+			echo "Error Not branchid function get_group_array";
 			return false;
+		}
+		if(substr($branchId,0,1) == "3"){
+			$group_id = substr((date("Y")+543),2,2).$data_branch['level_id'].$data_branch['branchId3'];
+		}else{
+			if($data_branch['level_id'] == 1){
+				$data_branch['level_id'] = 2;
+			}
 
-		$group_id = $data_branch['level_id'].$data_branch['branchId3'];
-
+			if($data_branch['level_id'] == 5){
+				$data_branch['level_id'] = 4;
+			}
+			$group_id = substr((date("Y")+543),2,2).$data_branch['level_id']."0".$data_branch['branchId3'];
+		}
 		$this->db->like('group_id', $group_id); 
 		$query = $this->db->get('tblgroup_id');
-
+		echo "check1";
+		echo $this->db->last_query();
 		if($query->num_rows() == 0)
 			return false;
 
@@ -361,12 +402,25 @@ WHERE room_group_id LIKE  '%".$w."%' ORDER BY room_std_group, stu_fname_th, stu_
 		if($data_branch === false)
 			return false;
 
-		$group_id = $data_branch['level_id'].$data_branch['branchId3'];
+		if(substr($branchId,0,1) == "3"){
+			$group_id = substr((date("Y")+543),2,2).$data_branch['level_id'].$data_branch['branchId3'];
+		}else{
+			if($data_branch['level_id'] == "1"){
+				$data_branch['level_id'] = 2;
+			}
+
+			if($data_branch['level_id'] == "5"){
+				$data_branch['level_id'] = 4;
+			}
+
+			$group_id = substr((date("Y")+543),2,2).$data_branch['level_id'].'0'.$data_branch['branchId3'];
+		}
+		
 		//var_dump($group_id);
 
 		$this->db->like('group_id', $group_id); 
 		$query = $this->db->get('tblgroup_id');
-		//echo $this->db->last_query();
+		echo $this->db->last_query();
 
 		if($query->num_rows() == 0)
 			return false;

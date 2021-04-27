@@ -65,6 +65,21 @@ class Export_pdf extends CI_Controller {
 
 	}
 
+	public function std_room_ethics($branchid,$group){
+		$group_full = $this->status->get_tblgroup_id_data_by_group($branchid,$group);
+
+		$data['data_group'][] = $group_full;
+		$data['file_name'] = $group_full['branch_id'].'_'.$group_full['branch_name'].'_'.$group_full['level_name'].'_'.$group.'.pdf';
+		$data['data_std'] = $this->candidate->get_std_list($branchid,$group);
+
+
+		//var_dump($data['data_std']);
+		//exit();
+		
+		$this->load->view('pdf/std_room_std_room_ethics_view.php',$data);
+
+	}
+
 
 	public function std_room_scan($branchid,$group){
 		$group_full = $this->status->get_tblgroup_id_data_by_group($branchid,$group);

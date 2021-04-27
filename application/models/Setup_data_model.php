@@ -125,10 +125,11 @@ class Setup_data_model extends CI_Model {
 	
 
 	public function update_tbl_branch(){
-		$query = $this->admission->query("SELECT branchId,branch,major,typeOfCourse,level,course,branchId3,groupNickName FROM tblbranch ");
+		$query = $this->admission->query("SELECT branchId,branch,major,typeOfCourse,level,course,branchId3,groupNickName,level_id FROM tblbranch ");
 
 		foreach ($query->result_array() as $row) {
-			$insert = $this->db->query("INSERT INTO branch (branchId,branch,major,typeOfCourse,level,course,branchId3,groupNickName,auto_datetime) VALUES ('".implode("','", $row)."',NOW()) ON DUPLICATE KEY UPDATE auto_datetime = NOW()");
+			$insert = $this->db->query("INSERT INTO branch (branchId,branch,major,typeOfCourse,level,course,branchId3,groupNickName,level_id,auto_datetime) VALUES ('".implode("','", $row)."',NOW()) ON DUPLICATE KEY UPDATE auto_datetime = NOW()");
+			echo $this->db->last_query();
 			if($insert){
 	 			$data[] = $row['branchId']."|| YES";
 	 		}else{
