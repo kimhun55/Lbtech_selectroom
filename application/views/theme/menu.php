@@ -152,6 +152,7 @@ if($count > 10){
 		          <li><?php echo anchor('recheck/checktblcandidategroup','Check tblcandidate = group');?></li>
 		        </ul>
 		      </li>
+			  <li><?php echo anchor('set_department','Set Department');?></li>
 		    </ul>
 		    <ul class="nav navbar-nav navbar-right">
 		      <li><a href="#"><span class="glyphicon glyphicon-user"></span>  <?php echo $name;?></a></li>
