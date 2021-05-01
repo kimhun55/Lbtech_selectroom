@@ -17,15 +17,16 @@ class Money_quaota_model extends CI_Model {
 	}
 
 	public function check_money_quaota(){
-		$this->money_quaota->where('stdofbank_no !=',0);
-		$query = $this->money_quaota->get('student');
+		//$this->money_quaota->where('check_data !=',0);
+		$query = $this->money_quaota->get('tbl_stdofbank_q');
 
 		if($query->num_rows() == 0){
+			//echo "0";
 				return false;
 		}
 
 		foreach ($query->result_array() as $row){
-			$data[$row['student_id']] = 1;
+			$data[$row['check_data']] = 1;
 		}
 		return $data;
 	}

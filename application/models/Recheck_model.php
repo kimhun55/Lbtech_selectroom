@@ -204,7 +204,8 @@ class Recheck_model extends CI_Model {
 		
 		//check money 
 		$money_check = $this->money_quaota->check_money_quaota();
-
+		// var_dump($money_check);
+		// exit();
 
 		if($query->num_rows() > 0){
 			foreach ($query->result_array() as $row){
